@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  # Servicio de MySQL
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_USER: nico                    # Usuario
+      MYSQL_PASSWORD: CURSO2022           # Contraseñita
+      MYSQL_DATABASE: ClinicaDentistadb   # Base de datos
+      MYSQL_ROOT_PASSWORD: rootpassword   # Contraseña de root
+    volumes:
+      - db_data:/var/lib/mysql            # Volumen para almacenar los datos
+    ports:
+      - 3306:3306                         # Mapeo de puerto
+
+  # Servicio de Tomcat
+  tomcat:
+    image: tomcat:9.0.75-jdk8-corretto-al2
+    restart: always
+    ports:
+      - 8081:8080                         # Mapeo del puerto de Tomcat
+    volumes:
+      - ./web:/usr/local/tomcat/webapps   # Volumen para desplegar las APLIWEBS en el server
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - mysql                             # Primero debe estar MySQL funcionado para que Tomcat se ejecute
+    links:
+      - mysql:mysql                       # Link al servicio de MySQL
+
+  # Servicio de phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8082:80                           # Mapeo de puerto
+    environment:
+      PMA_HOST: mysql                      # Host de MySQL
+      PMA_PORT: 3306                       # Puerto de MySQL
+      PMA_USER: nico                       # Nombre de usuario de MySQL
+      PMA_PASSWORD: CURSO2022              # Contraseña de MySQL
+
+volumes:
+  db_data:
+    driver: local                          # Volumen local para almacenar los datos de MySQL
+
+
+
+
+
+
+
+
+
