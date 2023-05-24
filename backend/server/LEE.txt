@@ -24,10 +24,23 @@ docker exec -it docker-mysql-1 mysql -u nico -p
 source /ClinicaDentistadb.sql
 
 ------------------------------------------------------------------------
+PARA QUE FUNCIONE EL HTML
+------------------------------------------------------------------------
+TIENES QUE MOVER EL ARCHIVO A LA CARPETA WEB QUE SE TE VA A CREAR EN EL
+ESCRITORIO SI HAS SEGUIDO BIEN LOS PASOS ANTERIORES.
+
+Y LUEGO A LA CARPETA ROOT DEL SERVIDOR, DONDE TENDRÁS PERMISO PARA VISUALIZAR
+EL ARCHIVO USANDO LA SIGUIENTE DIRECCIÓN EN EL NAVEGADOR:
+
+http://localhost:8081/index.html
+
+Puede que el puerto sea distinto, comprueba en Docker que puerto usa tu Apache
+
+------------------------------------------------------------------------
 EN CASO DE QUE VAYA MAL EL APACHE, DE ERROR 404
 ------------------------------------------------------------------------
 docker ps
-docker exec -it "NombreContenedor" /bin/bash
+docker exec -it NombreContenedor /bin/bash
 cd webapps.dist/
 ls
 cp -R * ../webapps
