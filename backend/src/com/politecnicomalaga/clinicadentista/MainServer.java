@@ -17,9 +17,9 @@ public class MainServer {
             System.out.println(resultado);
 
             // Esto nos da la lista de tratamientos para un paciente específico
-            String dniPaciente = "123456789"; // Pongo uno que ya se que existe
-            resultado = mysql.listaTratamientos(dniPaciente);
-            System.out.println(resultado);
+            // String dniPaciente = "123456789"; // Pongo uno que ya se que existe
+            // resultado = mysql.listaTratamientos(dniPaciente);
+            // System.out.println(resultado);
         } catch (Exception e) {
             e.printStackTrace();
         }
