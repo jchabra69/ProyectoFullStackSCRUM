@@ -15,20 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 public class ServerHttp extends HttpServlet {
 
 
-
+/* Método que procesa una solicitud HTTP, obtiene sus parámetros y realiza operaciones en una base de datos MySQL según el valor de la petición que genera una respuesta HTML que incluye el resultado de las operaciones.*/
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+	// Obtener los parámetros de la petición
         String peticionSolicitada = request.getParameter("peticion");
         String datos = request.getParameter("datos");  //Datos enviados en CSV
-        
-        
-        
+       
+        // Configurar el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
         
         String resultado = "";
         ServerMySQL bd = new ServerMySQL();
-        
+	    
+        // Realizar operaciones según la petición solicitada
         switch (peticionSolicitada) {
             case "todos": resultado = bd.getPacientes();
                  break;
@@ -38,7 +39,7 @@ public class ServerHttp extends HttpServlet {
         }
         
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            // Generar la respuesta HTML
             //out.print(resultado);
             out.println("<!DOCTYPE html>\n" +
                         "<html>\n" +
