@@ -17,7 +17,7 @@ public class ServerMySQL {
     public ServerMySQL() {
         sLastError = "";
     }
-
+    /* Método que se encarga de establecer la conexión a una base de datos (MySQL) utilizando los parámetros de conexión especificados y devuelve un objeto Connection que representa dicha conexión*/
     public Connection initDatabase() {
         Connection con = null;
         // Inicializa toda la información de la conexión a la base de datos
@@ -34,7 +34,7 @@ public class ServerMySQL {
             // Proporciona los datos para acceder
             con = DriverManager.getConnection(dbURL + dbName, dbUsername, dbPassword);
 
-            // Pa comprobar que funsiona
+            // Comprobamos si funciona
             System.out.println("Ole, olee k me  he conectao a tu base de datos");
         } catch (Exception e) {
             // SI FALLA
@@ -44,6 +44,7 @@ public class ServerMySQL {
         return con;
     }
 
+    /* Método que realiza una consulta a la base de datos para obtener información de la tabla "Pacientes" y devuelve un HTML que contiene los datos de los pacientes */
     public String getPacientes() {
         String resultado = "";
         String dni, nombre, apellidos, telefono, fnac, email;
@@ -95,16 +96,18 @@ public class ServerMySQL {
             return resultado + sLastError;
     }
 
-    // Método de inserción en la tabla de Pacientes de un nuevo valor.
+    /* Método de inserción en la tabla de Pacientes de un nuevo valor. */
     public String insertPaciente(String sCSV) {
         String resultado = "<p>Error al insertar</p>";
         Connection con = null;
         PreparedStatement ps = null;
 
+        //Creamos objeto Paciente
         Paciente miPr = new Paciente(sCSV);
 
         try {
             con = this.initDatabase();
+            //Establecemos parámetros
             ps = con.prepareStatement(
                     "INSERT INTO Pacientes (DNI, Nombre, Apellidos, Telefono, Fnac, Email) VALUES (?, ?, ?, ?, ?, ?)");
             ps.setString(1, miPr.sDni);
@@ -143,11 +146,13 @@ public class ServerMySQL {
 
    
 
-    public String insertTratamiento(String sCSV) {/////////////////////////////////////////////////////////////////////////////////////////
+    /* Método de inserción en la tabla de Tratamientos de un nuevo valor */
+    public String insertTratamiento(String sCSV) {
         String resultado = "<p>Error al insertar</p>";
         String id, desc, fecha, precio, cobrado, dniPac;
         Connection con = null;
        
+        //Creamos objeto Tratamiento
         Tratamiento miPr = new Tratamiento(sCSV);
         
         PreparedStatement ps = null;
@@ -155,6 +160,7 @@ public class ServerMySQL {
         try {
             con = this.initDatabase();
             //st = con.createStatement();
+            //Establecemos parámetros
             ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?,?)");
             ps.setString(1, miPr.sCodigo);
             ps.setString(2, miPr.sDescripcion);
@@ -190,7 +196,7 @@ public class ServerMySQL {
         
     }
 
-    // Método para obtener la lista de tratamientos de un paciente dado su DNI
+    /* Método para obtener la lista de tratamientos de un paciente dado su DNI */
     public String listaTratamientos(String dniPaciente) {
         String resultado = "";
         Connection con = null;
@@ -199,6 +205,7 @@ public class ServerMySQL {
         int iRows = 0;
 
         try {
+            //Conexión con la base de datos
             con = this.initDatabase();
 
            
@@ -218,7 +225,7 @@ public class ServerMySQL {
                 double precio = rs.getDouble("Precio");
                 boolean cobrado = rs.getBoolean("Cobrado");
 
-                // Construir el resultado
+                // Extraemos los valores de cada columna correspondiente a los tratamientos y se construye una cadena de texto resultado con la información de cada tratamiento
                 resultado += "<p>Código: " + codigo + "</p>";
                 resultado += "<p>Descripción: " + descripcion + "</p>";
                 resultado += "<p>Fecha: " + fecha + "</p>";
