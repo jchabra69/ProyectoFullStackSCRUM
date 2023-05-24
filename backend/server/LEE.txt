@@ -26,8 +26,8 @@ source /ClinicaDentistadb.sql
 ------------------------------------------------------------------------
 PARA QUE FUNCIONE EL HTML
 ------------------------------------------------------------------------
-TIENES QUE MOVER EL ARCHIVO A LA CARPETA WEB QUE SE TE VA A CREAR EN EL
-ESCRITORIO SI HAS SEGUIDO BIEN LOS PASOS ANTERIORES.
+TIENES QUE MOVER EL INDEX.HTML LOCALIZADO EN LA CARPETA FRONTEND A LA CARPETA WEB
+DEL ESCRITORIO, web solo te aparecerá si has hecho bien los pasos anteriores
 
 Y LUEGO A LA CARPETA ROOT DEL SERVIDOR, DONDE TENDRÁS PERMISO PARA VISUALIZAR
 EL ARCHIVO USANDO LA SIGUIENTE DIRECCIÓN EN EL NAVEGADOR:
