@@ -80,7 +80,7 @@
         }
     </style>
 </head>
-
+/* Conjunto de formularios HTML que proporcionan al usuario entradas de texto para al presionar los botones, se envie el formulario al servidor para realizar una búsqueda basada en el dato introducido. */
 <body>
     <h1>Clínica Dem-Encía</h1>
 
@@ -128,19 +128,26 @@
     </form>
 
     <script>
+        //URL de la que obtenemos los datos
         const baseUrl = 'http://localhost:8081/index.html';
 
         // Listener listaPacientes
         document.getElementById('listaPacientesForm').addEventListener('submit', function (event) {
             event.preventDefault();
+            // Obtiene el valor ingresado en el campo y lo guarda en una variable
             const apellidos = document.getElementById('apellidosInput').value;
+            // URL para enviar la solicitud HTTP que controla los carácteres especiales
             const url = `${baseUrl}/listaPacientes?parametro=${encodeURIComponent(apellidos)}`;
+            // Solicitud HTTP GET a la URL
             fetch(url)
+                // Convierte la solicitud HTTP en JSON
                 .then(response => response.json())
                 .then(data => {
                     // Construye la tabla con los resultados
                     const table = document.getElementById('pacientesTable');
-                    table.innerHTML = ''; // Limpia la tabla anterior
+                    // Limpia la tabla anterior
+                    table.innerHTML = ''; 
+                    // Creamos un Array
                     const headers = ['ID', 'Nombre', 'Apellidos', 'DNI'];
                     const headerRow = document.createElement('tr');
                     headers.forEach(header => {
@@ -149,8 +156,10 @@
                         headerRow.appendChild(th);
                     });
                     table.appendChild(headerRow);
+                    // Itera sobre los elementos del array, que contiene los datos de los pacientes obtenidos del JSON
                     data.forEach(paciente => {
                         const row = document.createElement('tr');
+                        // Se crea una celda para cada atributo del paciente (ID, nombre, apellidos, DNI) y se añaden los valores correspondientes
                         const idCell = document.createElement('td');
                         idCell.textContent = paciente.id;
                         const nombreCell = document.createElement('td');
@@ -163,6 +172,7 @@
                         row.appendChild(nombreCell);
                         row.appendChild(apellidosCell);
                         row.appendChild(dniCell);
+                        // Agrega la fila del paciente a la tabla
                         table.appendChild(row);
                     });
                 })
@@ -172,14 +182,20 @@
         // Listener listaTratamientos
         document.getElementById('listaTratamientosForm').addEventListener('submit', function (event) {
             event.preventDefault();
+            // Obtiene el valor ingresado en el campo y lo guarda en una variable
             const dniPaciente = document.getElementById('dniInput').value;
+            // URL para enviar la solicitud HTTP que controla los carácteres especiales
             const url = `${baseUrl}/listaTratamientos?parametro=${encodeURIComponent(dniPaciente)}`;
+            // Solicitud HTTP GET a la URL
             fetch(url)
+                // Convierte la solicitud HTTP en JSON
                 .then(response => response.json())
                 .then(data => {
                     // Construir la tabla con los resultados
                     const table = document.getElementById('tratamientosTable');
-                    table.innerHTML = ''; // Limpiar tabla anterior
+                    // Limpia la tabla anterior 
+                    table.innerHTML = ''; 
+                    // Creamos un Array
                     const headers = ['ID', 'Descripción', 'Fecha', 'Precio'];
                     const headerRow = document.createElement('tr');
                     headers.forEach(header => {
@@ -188,8 +204,10 @@
                         headerRow.appendChild(th);
                     });
                     table.appendChild(headerRow);
+                    // Itera sobre los elementos del array, que contiene los datos de los pacientes obtenidos del JSON
                     data.forEach(tratamiento => {
                         const row = document.createElement('tr');
+                        // Se crea una celda para cada atributo del paciente (ID, nombre, apellidos, DNI) y se añaden los valores correspondientes
                         const idCell = document.createElement('td');
                         idCell.textContent = tratamiento.id;
                         const descripcionCell = document.createElement('td');
@@ -202,12 +220,14 @@
                         row.appendChild(descripcionCell);
                         row.appendChild(fechaCell);
                         row.appendChild(precioCell);
+                        // Agrega la fila del paciente a la tabla
                         table.appendChild(row);
                     });
                 })
                 .catch(error => console.log(error));
         });
 
+        /* Conjunto de Listeners que trabajan con el formulario del HTTP, obtienen el valor ingresado, crea una solicitud HTTP GET con los datos del paciente en formato JSON y lo muestra por consola */
         // Listener insertPaciente
         document.getElementById('insertPacienteForm').addEventListener('submit', function (event) {
             event.preventDefault();
