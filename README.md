@@ -8,3 +8,9 @@ En esta reunión, se especificó la organización del trabajo, siendo Gonzalo, N
 
 16/05/2023
 Tanto Lorena como Adrián no se pudieron unir debido a la disponibilidad horaria. Nicolás, Gonzalo y yo seguimos con Docker para hacer el servidor, con el cual tuvimos problemas al principio, pero al final Nicolás logró crearlo. Más tarde hicimos una pequeña reunión nosotros 3 para comprobar si podíamos entrar sin ningún tipo de problema al servidor, y efectivamente funcionaba.
+
+21/05/2023
+Nos reunimos Lorena, Luis, Adrían y yo. Adri había hecho el html del servidor. Intentamos conectar el BackEnd con el FrontEnd pero no conseguimos solucionarlo.
+
+24/05/2023
+Última reunión. Estuvimos Nico, Lorena y yo intentándolo hasta que al final Nico dio con la solución al error.
