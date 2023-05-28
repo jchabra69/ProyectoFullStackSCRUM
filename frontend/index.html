@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clínica Dentista</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1f1f1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        @media only screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- Conjunto de formularios HTML que proporcionan al usuario entradas de texto para al presionar los botones, se envie el formulario al servidor para realizar una búsqueda basada en el dato introducido. -->
+<body>
+    <h1>Clínica Dem-Encía</h1>
+
+    <h2>Lista de Pacientes</h2>
+    <form id="listaPacientesForm">
+        <label for="apellidosInput">Apellidos:</label>
+        <input type="text" id="apellidosInput" name="apellidos">
+        <button type="submit">Buscar</button>
+    </form>
+    <table id="pacientesTable">
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </table>
+
+    <h2>Lista de Tratamientos</h2>
+    <form id="listaTratamientosForm">
+        <label for="dniInput">DNI Paciente:</label>
+        <input type="text" id="dniInput" name="dniPaciente">
+        <button type="submit">Buscar</button>
+    </form>
+    <table id="tratamientosTable">
+        <!-- Aquí se mostrarán los resultados de la búsqueda -->
+    </table>
+
+    <h2>Insertar Paciente</h2>
+    <form id="insertPacienteForm">
+        <label for="jsonPacienteInput">JSON Paciente:</label>
+        <textarea id="jsonPacienteInput" name="jsonPaciente"></textarea>
+        <button type="submit">Insertar</button>
+    </form>
+
+    <h2>Insertar Tratamiento</h2>
+    <form id="insertTratamientoForm">
+        <label for="jsonTratamientoInput">JSON Tratamiento:</label>
+        <textarea id="jsonTratamientoInput" name="jsonTratamiento"></textarea>
+        <button type="submit">Insertar</button>
+    </form>
+
+    <h2>Cobrar Tratamiento</h2>
+    <form id="cobraTratamientoForm">
+        <label for="codTratamientoInput">Código Tratamiento:</label>
+        <input type="text" id="codTratamientoInput" name="codTratamiento">
+        <label for="codPacienteInput">Código Paciente:</label>
+        <input type="text" id="codPacienteInput" name="codPaciente">
+        <button type="submit">Cobrar</button>
+    </form>
+
+    <script>
+        //URL de la que obtenemos los datos
+        const baseUrl = 'http://localhost:8081/index.html'; 
+                // del formulario de listaPacientes esperamos al boton submit
+            document.getElementById('listaPacientesForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+                //añadimos los apellidos introducidos a nuestra variable
+            const apellidos = document.getElementById('apellidosInput').value;
+                // con nuestra URL base le sumamos la consulta qque queremos y el valor de apellidos
+            const url = `${baseUrl}/listaPacientes?parametro=${encodeURIComponent(apellidos)}`;
+                //abrimos nuestra url en una nueva pestaña
+            window.open(url, '_blank');
+            });
+
+        
+                // formulario de listaTratamientos
+            document.getElementById('listaTratamientosForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const dniPaciente = document.getElementById('dniInput').value;
+            const url = `${baseUrl}/listaTratamientos?parametro=${encodeURIComponent(dniPaciente)}`;
+            window.open(url, '_blank');
+            });
+
+                // formulario de insertPaciente
+            document.getElementById('insertPacienteForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const jsonPaciente = document.getElementById('jsonPacienteInput').value;
+            const url = `${baseUrl}/insertPaciente?parametro=${encodeURIComponent(jsonPaciente)}`;
+            window.open(url, '_blank');
+            });
+
+                // formulario de insertTratamiento
+            document.getElementById('insertTratamientoForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const jsonTratamiento = document.getElementById('jsonTratamientoInput').value;
+            const url = `${baseUrl}/insertTratamiento?parametro=${encodeURIComponent(jsonTratamiento)}`;
+            window.open(url, '_blank');
+             });
+
+                // formulario de cobraTratamiento
+            document.getElementById('cobraTratamientoForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const codTratamiento = document.getElementById('codTratamientoInput').value;
+            const codPaciente = document.getElementById('codPacienteInput').value;
+            const url = `${baseUrl}/cobraTratamiento?parametro=${encodeURIComponent(codTratamiento)};${encodeURIComponent(codPaciente)}`;
+            window.open(url, '_blank');
+            });
+    </script>
+</body>
+
+</html>
