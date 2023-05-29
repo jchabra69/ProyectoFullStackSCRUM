@@ -2,11 +2,8 @@ package com.politecnicomalaga.clinicadentista;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +13,14 @@ public class ServerHttp extends HttpServlet {
 
 
 /* Método que procesa una solicitud HTTP, obtiene sus parámetros y realiza operaciones en una base de datos MySQL según el valor de la petición que genera una respuesta HTML que incluye el resultado de las operaciones.*/
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
 	// Obtener los parámetros de la petición
         String peticionSolicitada = request.getParameter("peticion");
-        String datos = request.getParameter("datos");  //Datos enviados en CSV
+        String datosPaciente = request.getParameter("datosPaciente");  //Datos enviados en CSV
+        String datosTratamiento = request.getParameter("datosTratamiento");
        
         // Configurar el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
@@ -31,9 +30,15 @@ public class ServerHttp extends HttpServlet {
 	    
         // Realizar operaciones según la petición solicitada
         switch (peticionSolicitada) {
-            case "todos": resultado = bd.getPacientes();
+            case "todosPacientes": resultado = bd.getPacientes();
                  break;
-            case "insertar": resultado = bd.insertPaciente(datos);
+            case "insertarPaciente": resultado = bd.insertPaciente(datosPaciente);
+                 break;      
+            case "eliminarPaciente": resultado = bd.deletePaciente();
+                 break;
+            case "insertarTratamiento": resultado = bd.insertTratamiento(datosTratamiento);
+                 break; 
+            case "eliminarPaciente": resultado = bd.deleteTratamiento();
                  break;
             default: resultado = "<p>Parámetro desconocido</p>";
         }
