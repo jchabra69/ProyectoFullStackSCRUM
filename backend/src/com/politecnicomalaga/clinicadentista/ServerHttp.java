@@ -48,7 +48,7 @@ public class ServerHttp extends HttpServlet {
                             "<meta charset=\"UTF-8\">\n" +
                             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                         "</head>\n" +
-                        "<body style=\"background-color:red;\"><p>Resultado:</p>\n" +
+                        "<body style=\"background-color:light-green;\"><p>Resultado:</p>\n" +
                             resultado +
                         "</body>\n" +
                         "</html>");

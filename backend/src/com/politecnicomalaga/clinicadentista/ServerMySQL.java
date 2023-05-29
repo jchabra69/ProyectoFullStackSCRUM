@@ -144,7 +144,11 @@ public class ServerMySQL {
             return resultado + sLastError;
     }
 
-   
+    public String deletePaciente(String sCSV) {
+    	String resultado = "¡Se ha producido un error en deletePaciente()!"
+    	
+    	return "<p>" + resultado + "</p>";
+    }
 
     /* Método de inserción en la tabla de Tratamientos de un nuevo valor */
     public String insertTratamiento(String sCSV) {
