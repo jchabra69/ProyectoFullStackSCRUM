@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="FULLSTACK">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="FULLSTACK.war" />
+  </artifact>
+</component>
