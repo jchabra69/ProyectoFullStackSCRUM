@@ -96,6 +96,38 @@ public class ServerMySQL {
             return resultado + sLastError;
     }
 
+	public String deletePaciente(String sCSV) {
+		String resultado = "???";
+        Connection con = null;
+        PreparedStatement ps = null;
+        int iRows = 0;
+        try {
+            con = this.initDatabase();
+            Paciente miPr = new Paciente(sCSV);
+            ps = con.prepareStatement("DELETE FROM Pacientes p WHERE p.DNI = '" + miPr.sDni + "'");
+            ResultSet rs = ps.executeQuery();
+        } catch (Exception e) {
+            sLastError = sLastError + "<p>Error al eliminar un Paciente: " + e.getMessage() + "</p>";
+            e.printStackTrace();
+        } finally {
+            // Liberar recursos: cerrar la conexión y la sentencia
+            try {
+                if (ps != null)
+                    ps.close();
+                if (con != null)
+                    con.close();
+            } catch (Exception e) {
+                sLastError = sLastError + "<p>Error cerrando la conexión a la BBDD: " + e.getMessage() + "</p>";
+                e.printStackTrace();
+            }
+        }
+        resultado += "\n<p>Paciente eliminado</p>\n";
+        if (sLastError.isEmpty())
+            return resultado;
+        else
+            return resultado + sLastError;
+	}
+    
     /* Método de inserción en la tabla de Pacientes de un nuevo valor. */
     public String insertPaciente(String sCSV) {
         String resultado = "<p>Error al insertar</p>";
@@ -143,13 +175,7 @@ public class ServerMySQL {
         else
             return resultado + sLastError;
     }
-
-    public String deletePaciente(String sCSV) {
-    	String resultado = "¡Se ha producido un error en deletePaciente()!";
-    	
-    	return "<p>" + resultado + "</p>";
-    }
-
+    
     /* Método de inserción en la tabla de Tratamientos de un nuevo valor */
     public String insertTratamiento(String sCSV) {
         String resultado = "<p>Error al insertar</p>";
@@ -165,13 +191,21 @@ public class ServerMySQL {
             con = this.initDatabase();
             //st = con.createStatement();
             //Establecemos parámetros
-            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?,?)");
+            /*
+			    Codigo INT AUTO_INCREMENT PRIMARY KEY,
+			    Descripcion VARCHAR(100),
+			    Fecha DATE,
+			    Precio FLOAT,
+			    Cobrado BOOLEAN DEFAULT FALSE,
+			    Dni_Paciente VARCHAR(9) NOT NULL,
+		    */
+            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado, Dni_Paciente) values (?,?,?,?,?,?)");
             ps.setString(1, miPr.sCodigo);
             ps.setString(2, miPr.sDescripcion);
-            ps.setString(3,miPr.sFecha);
-            ps.setString(4,miPr.fPrecio + "");
-            ps.setString(5,miPr.bCobrado + "");
-            ps.setString(6,"NO_HECHO!");
+            ps.setString(3, miPr.sFecha);
+            ps.setString(4, miPr.fPrecio + "");
+            ps.setString(5, miPr.bCobrado + "");
+            //ps.setString(6, miPr.);
      
             if (ps.executeUpdate()!=0)
         		resultado = "<p>Tratamiento insertado correctamente</p>";

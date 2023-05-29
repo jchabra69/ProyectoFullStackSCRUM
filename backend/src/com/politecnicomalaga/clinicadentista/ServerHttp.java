@@ -20,7 +20,7 @@ public class ServerHttp extends HttpServlet {
 	// Obtener los parámetros de la petición
         String peticionSolicitada = request.getParameter("peticion");
         String datosPaciente = request.getParameter("datosPaciente");  //Datos enviados en CSV
-        String datosTratamiento = request.getParameter("datosTratamiento");
+        //String datosTratamiento = request.getParameter("datosTratamiento");
        
         // Configurar el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
@@ -34,12 +34,12 @@ public class ServerHttp extends HttpServlet {
                  break;
             case "insertarPaciente": resultado = bd.insertPaciente(datosPaciente);
                  break;      
-            case "eliminarPaciente": resultado = bd.deletePaciente();
+            case "eliminarPaciente": resultado = bd.deletePaciente(datosPaciente);
                  break;
-            case "insertarTratamiento": resultado = bd.insertTratamiento(datosTratamiento);
+            /*case "insertarTratamiento": resultado = bd.insertTratamiento(datosTratamiento);
                  break; 
-            case "eliminarPaciente": resultado = bd.deleteTratamiento();
-                 break;
+            case "eliminarTratamiento": resultado = bd.deleteTratamiento();
+                 break;*/
             default: resultado = "<p>Parámetro desconocido</p>";
         }
         
