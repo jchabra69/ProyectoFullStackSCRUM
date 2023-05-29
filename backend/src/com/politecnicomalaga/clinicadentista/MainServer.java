@@ -8,7 +8,9 @@ import javax.servlet.http.*;
 
 public class MainServer {
     public static void main(String[] args) {
-        ServerMySQL mysql = new ServerMySQL();
+    	
+    	
+        /*ServerMySQL mysql = new ServerMySQL();
         String resultado;
 
         try {
@@ -22,6 +24,6 @@ public class MainServer {
             // System.out.println(resultado);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -145,7 +145,7 @@ public class ServerMySQL {
     }
 
     public String deletePaciente(String sCSV) {
-    	String resultado = "¡Se ha producido un error en deletePaciente()!"
+    	String resultado = "¡Se ha producido un error en deletePaciente()!";
     	
     	return "<p>" + resultado + "</p>";
     }
