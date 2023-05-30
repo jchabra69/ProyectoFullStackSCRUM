@@ -13,4 +13,10 @@ Tanto Lorena como Adrián no se pudieron unir debido a la disponibilidad horaria
 Nos reunimos Lorena, Luis, Adrían y yo. Adri había hecho el html del servidor. Intentamos conectar el BackEnd con el FrontEnd pero no conseguimos solucionarlo.
 
 24/05/2023
-Última reunión. Estuvimos Nico, Lorena y yo intentándolo hasta que al final Nico dio con la solución al error.
+Estuvimos Nico, Lorena y yo intentándolo hasta que al final Nico dio con la solución al error.
+
+26/05/2023
+Nos reunimos Lorena y yo para intentar implementar el .war que había hecho ella con anterioridad.
+
+29/05/2023
+Sobre esta reunión, nos reunimos Gonzalo, Fran, Luis y yo para arreglar un poco el BackEnd y más tarde iniciar la vista del navegador con un html que realizó Luis.
