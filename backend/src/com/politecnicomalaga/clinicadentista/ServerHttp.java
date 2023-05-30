@@ -18,28 +18,27 @@ public class ServerHttp extends HttpServlet {
             throws ServletException, IOException {
         
 	// Obtener los parámetros de la petición
-        String peticionSolicitada = request.getParameter("peticion");
-        String datosPaciente = request.getParameter("datosPaciente");  //Datos enviados en CSV
-        //String datosTratamiento = request.getParameter("datosTratamiento");
-       
+    	String peticionSolicitada = request.getParameter("peticion");
+        String parametro = request.getParameter("parametro");
+
         // Configurar el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String resultado = "";
         ServerMySQL bd = new ServerMySQL();
-	    
+
         // Realizar operaciones según la petición solicitada
         switch (peticionSolicitada) {
-            case "todosPacientes": resultado = bd.getPacientes();
+            case "listaPacientes": resultado = bd.listaPacientes(parametro); // parametro = apellidos
                  break;
-            case "insertarPaciente": resultado = bd.insertPaciente(datosPaciente);
-                 break;      
-            case "eliminarPaciente": resultado = bd.deletePaciente(datosPaciente);
+            case "listaTratamientos": resultado = bd.listaTratamientos(parametro); // parametro = dniPaciente
+                break;
+            case "insertPaciente": resultado = bd.insertPaciente(parametro); // parametro = json Paciente
                  break;
-            /*case "insertarTratamiento": resultado = bd.insertTratamiento(datosTratamiento);
+            case "insertTratamiento": resultado = bd.insertTratamiento(parametro); // parametro = json tratamiento
                  break; 
-            case "eliminarTratamiento": resultado = bd.deleteTratamiento();
-                 break;*/
+            case "cobrarTratamiento": resultado = bd.cobrarTratamiento(parametro); // parametro = codTratamiento";"codPaciente
+                 break;
             default: resultado = "<p>Parámetro desconocido</p>";
         }
         

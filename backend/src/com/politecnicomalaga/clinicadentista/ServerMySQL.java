@@ -8,7 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-
+import java.util.Map;
+import java.util.HashMap;
 
 public class ServerMySQL {
 
@@ -45,34 +46,26 @@ public class ServerMySQL {
     }
 
     /* Método que realiza una consulta a la base de datos para obtener información de la tabla "Pacientes" y devuelve un HTML que contiene los datos de los pacientes */
-    public String getPacientes() {
+    public String listaPacientes(String apellidos) {
         String resultado = "";
-        String dni, nombre, apellidos, telefono, fnac, email;
         Connection con = null;
         PreparedStatement ps = null;
         int iRows = 0;
         try {
             con = this.initDatabase();
-            ps = con.prepareStatement("SELECT * FROM Pacientes");
+            ps = con.prepareStatement("SELECT * FROM Pacientes WHERE Apellidos = '" + apellidos + "';");
             ResultSet rs = ps.executeQuery();
 
             // Iteración sobre el resultset
             while (rs.next()) {
                 iRows++;
-                dni = rs.getString("DNI");
-                nombre = rs.getString("Nombre");
-                apellidos = rs.getString("Apellidos");
-                telefono = rs.getString("Telefono");
-                fnac = rs.getString("Fnac");
-                email = rs.getString("Email");
-
                 // Guardar los resultados
-                resultado += "<p>" + dni + ";" +
-                        nombre + ";" +
-                        apellidos + ";" +
-                        telefono + ";" +
-                        fnac + ";" +
-                        email + "</p>\n";
+                resultado += "<p>" + rs.getString("DNI") + ";" +
+                		rs.getString("Nombre") + ";" +
+                		rs.getString("Apellidos") + ";" +
+                		rs.getString("Telefono") + ";" +
+                        rs.getString("Fnac") + ";" +
+                        rs.getString("Email") + "</p>\n";
             }
         } catch (Exception e) {
             sLastError = sLastError + "<p>Error accediendo a la BBDD Select: " + e.getMessage() + "</p>";
@@ -129,25 +122,29 @@ public class ServerMySQL {
 	}
     
     /* Método de inserción en la tabla de Pacientes de un nuevo valor. */
-    public String insertPaciente(String sCSV) {
+    public String insertPaciente(String jsonPaciente) {
         String resultado = "<p>Error al insertar</p>";
+        
         Connection con = null;
         PreparedStatement ps = null;
-
         //Creamos objeto Paciente
-        Paciente miPr = new Paciente(sCSV);
+        String[] valores = jsonPaciente.substring(1).replace("}", "").replace("\"", "").replace(" ", "").split(",");
+        Map<String, String> map = new HashMap<>();
+        for(int i = 0; i < 6; i++) {
+        	map.put(valores[i].split(":")[0].toLowerCase(), valores[i].split(":")[1]);
+        }
 
         try {
             con = this.initDatabase();
             //Establecemos parámetros
             ps = con.prepareStatement(
                     "INSERT INTO Pacientes (DNI, Nombre, Apellidos, Telefono, Fnac, Email) VALUES (?, ?, ?, ?, ?, ?)");
-            ps.setString(1, miPr.sDni);
-            ps.setString(2, miPr.sNombre);
-            ps.setString(3, miPr.sApellidos);
-            ps.setString(4, miPr.sTelefono);
-            ps.setDate(5, java.sql.Date.valueOf(miPr.sFNac));
-            ps.setString(6, miPr.sEmail);
+            ps.setString(1, map.get("dni"));
+            ps.setString(2, map.get("nombre"));
+            ps.setString(3, map.get("apellidos"));
+            ps.setString(4, map.get("telefono"));
+            ps.setDate(5, java.sql.Date.valueOf(map.get("fnac")));
+            ps.setString(6, map.get("email"));
 
             if (ps.executeUpdate() != 0)
                 resultado = "<p>Paciente insertado correctamente</p>";
@@ -175,17 +172,19 @@ public class ServerMySQL {
         else
             return resultado + sLastError;
     }
-    
-
+  
     /* Método de inserción en la tabla de Tratamientos de un nuevo valor */
-    public String insertTratamiento(String sCSV, String dni_paciente) {
+    public String insertTratamiento(String jsonTratamiento) {
         String resultado = "<p>Error al insertar</p>";
-        String id, desc, fecha, precio, cobrado, dniPac;
         Connection con = null;
        
         //Creamos objeto Tratamiento
-        Tratamiento miPr = new Tratamiento(sCSV);
-        
+        String[] valores = jsonTratamiento.substring(1).replace("}", "").replace("\"", "").replace(" ", "").split(",");
+        Map<String, String> map = new HashMap<>();
+        for(int i = 0; i < 6; i++) {
+        	map.put(valores[i].split(":")[0].toLowerCase(), valores[i].split(":")[1]);
+        }
+
         PreparedStatement ps = null;
       
         try {
@@ -193,12 +192,12 @@ public class ServerMySQL {
             //st = con.createStatement();
             //Establecemos parámetros
             ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?)");
-            ps.setString(1, miPr.sCodigo);
-            ps.setString(2, miPr.sDescripcion);
-            ps.setString(3,miPr.sFecha);
-            ps.setString(4,miPr.fPrecio + "");
-            ps.setString(5,miPr.bCobrado + "");
-            ps.setString(6,dni_paciente+ "");
+            ps.setString(1, map.get("codigo"));
+            ps.setString(2, map.get("descripcion"));
+            ps.setDate(3, java.sql.Date.valueOf(map.get("fecha")));
+            ps.setString(4, map.get("precio"));
+            ps.setString(5, map.get("cobrado"));
+            ps.setString(6, map.get("dnipaciente"));
      
             if (ps.executeUpdate()!=0)
         		resultado = "<p>Tratamiento insertado correctamente</p>";
@@ -240,7 +239,7 @@ public class ServerMySQL {
             con = this.initDatabase();
 
            
-            String query = "SELECT * FROM Tratamiento WHERE Dni_Paciente = ?";
+            String query = "SELECT * FROM Tratamiento WHERE Dni_Paciente = '?'";
             ps = con.prepareStatement(query);
             ps.setString(1, dniPaciente);
 
@@ -250,18 +249,13 @@ public class ServerMySQL {
             // Iterar sobre los resultados del ResultSet
             while (rs.next()) {
                 iRows++;
-                int codigo = rs.getInt("Codigo");
-                String descripcion = rs.getString("Descripcion");
-                Date fecha = rs.getDate("Fecha");
-                double precio = rs.getDouble("Precio");
-                boolean cobrado = rs.getBoolean("Cobrado");
 
                 // Extraemos los valores de cada columna correspondiente a los tratamientos y se construye una cadena de texto resultado con la información de cada tratamiento
-                resultado += "<p>Código: " + codigo + "</p>";
-                resultado += "<p>Descripción: " + descripcion + "</p>";
-                resultado += "<p>Fecha: " + fecha + "</p>";
-                resultado += "<p>Precio: " + precio + "</p>";
-                resultado += "<p>Cobrado: " + cobrado + "</p>";
+                resultado += "<p>Código: " + rs.getInt("Codigo") + "</p>";
+                resultado += "<p>Descripción: " + rs.getString("Descripcion") + "</p>";
+                resultado += "<p>Fecha: " + rs.getDate("Fecha") + "</p>";
+                resultado += "<p>Precio: " + rs.getDouble("Precio") + "</p>";
+                resultado += "<p>Cobrado: " + rs.getBoolean("Cobrado") + "</p>";
                 resultado += "<br/>";
             }
         } catch (Exception e) {
@@ -294,6 +288,52 @@ public class ServerMySQL {
         }
     }
     
+    public String cobrarTratamiento(String codigo) { // codigo = codTratamiento
+        String resultado = "";
+        Connection con = null;
+        PreparedStatement ps = null;
+        String[] codigos = codigo.split(";");
+
+        // Declara y asigna un valor inicial a sLastError
+        String sLastError = "";
+
+        try {
+            con = this.initDatabase();
+            String query = "UPDATE Tratamiento SET Cobrado = true WHERE Dni_Paciente = " + codigos[0] + " AND Codigo = " + codigos[1];
+            ps = con.prepareStatement(query);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 0) {
+                resultado = "<p>Tratamiento cobrado correctamente</p>";
+            } else {
+                resultado = "<p>Algo ha salido mal con la sentencia Update Tratamiento</p>";
+            }
+
+        } catch (Exception e) {
+            sLastError = sLastError + "<p>Error actualizando la BBDD: " + e.getMessage() + "</p>";
+            e.printStackTrace();
+        } finally {
+            // Cerrar conexión
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
+                e.printStackTrace();
+            }
+        }
+
+        if (sLastError.isEmpty()) {
+            return resultado;
+        } else {
+            return resultado + sLastError;
+        }
+    }
 
 }
 

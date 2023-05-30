@@ -10,12 +10,25 @@ public class MainServer {
     public static void main(String[] args) {
     	
     	
-        ServerMySQL mysql = new ServerMySQL();
+    	
+        try {
+        	ServerMySQL mysql = new ServerMySQL();
+            mysql.initDatabase();
+            
+            mysql.cobrarTratamiento("123456789;1");
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
+        /*
+        
         String resultado;
-
+        //EJEMPLO JSON: {name:"John", age:"31", city:"New York"}
+        mysql.insertPaciente("{name:\"John\", age:31, city:\"New York\"}");
+        
         try {
             // Esto devuelve la lista de pacientes
-            resultado = mysql.getPacientes();
+            resultado = mysql.listaPacientes("Ruiz");
             System.out.println(resultado);
 
             // Esto nos da la lista de tratamientos para un paciente específico
@@ -24,8 +37,6 @@ public class MainServer {
             System.out.println(resultado);
         } catch (Exception e) {
             e.printStackTrace();
-        
+        }*/
     }
-}
-
 }
