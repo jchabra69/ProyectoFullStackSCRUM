@@ -44,6 +44,7 @@ public class ServerMySQL {
         return con;
     }
 
+    //ListaPacientes
     /* Método que realiza una consulta a la base de datos para obtener información de la tabla "Pacientes" y devuelve un HTML que contiene los datos de los pacientes */
     public String getPacientes() {
         String resultado = "";
