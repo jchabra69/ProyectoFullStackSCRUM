@@ -22,7 +22,7 @@ public class ServerMySQL {
         Connection con = null;
         // Inicializa toda la información de la conexión a la base de datos
         String dbDriver = "com.mysql.cj.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3306/";
+        String dbURL = "jdbc:mysql://130.61.154.70:3306/";
         // Nombre de la base de datos a la que se accederá
         String dbName = "ClinicaDentistadb";
         String dbUsername = "nico";
