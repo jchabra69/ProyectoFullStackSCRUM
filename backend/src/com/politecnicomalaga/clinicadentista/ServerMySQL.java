@@ -162,7 +162,7 @@ public class ServerMySQL {
             con = this.initDatabase();
             //st = con.createStatement();
             //Establecemos parámetros
-            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?,?)");
+            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?)");
             ps.setString(1, miPr.sCodigo);
             ps.setString(2, miPr.sDescripcion);
             ps.setString(3,miPr.sFecha);
