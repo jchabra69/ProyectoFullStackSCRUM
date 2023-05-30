@@ -22,7 +22,7 @@ Nos reunimos Lorena y yo para intentar implementar el .war que había hecho ella
 Sobre esta reunión, nos reunimos Gonzalo, Fran, Luis y yo para arreglar un poco el BackEnd y más tarde iniciar la vista del navegador con un html que realizó Luis.
 
 ## 30/05/2023
-Se ha terminado el backend pero no sabemos como conectar el ServerHttp con el index.html. Todo funciona correctamente excepto el FrontEnd. También se ha movido todo el docker a http://130.61.154.70:8080/Clinica/ produciendo un despliegue del .war
+Se ha terminado el Backend pero no sabemos como conectar el ServerHttp con el index.html. Todo funciona correctamente excepto el FrontEnd. También se ha movido todo el Docker a http://130.61.154.70:8080/Clinica/ produciendo un despliegue del .war
 Han asistido: Sergio, Fran, Gonzalo, Lorena, Luis y Nico.
 
-![Fase de Producción y Despliegue](https://cdn.discordapp.com/attachments/1107803866789056672/1113246639856037908/collage.png)
+<img src="https://cdn.discordapp.com/attachments/1107803866789056672/1113246639856037908/collage.png" alt="Fase de Producción y Despliegue" width="300">
