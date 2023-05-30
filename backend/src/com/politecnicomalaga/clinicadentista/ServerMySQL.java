@@ -176,8 +176,9 @@ public class ServerMySQL {
             return resultado + sLastError;
     }
     
+
     /* Método de inserción en la tabla de Tratamientos de un nuevo valor */
-    public String insertTratamiento(String sCSV) {
+    public String insertTratamiento(String sCSV, String dni_paciente) {
         String resultado = "<p>Error al insertar</p>";
         String id, desc, fecha, precio, cobrado, dniPac;
         Connection con = null;
@@ -191,21 +192,13 @@ public class ServerMySQL {
             con = this.initDatabase();
             //st = con.createStatement();
             //Establecemos parámetros
-            /*
-			    Codigo INT AUTO_INCREMENT PRIMARY KEY,
-			    Descripcion VARCHAR(100),
-			    Fecha DATE,
-			    Precio FLOAT,
-			    Cobrado BOOLEAN DEFAULT FALSE,
-			    Dni_Paciente VARCHAR(9) NOT NULL,
-		    */
-            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado, Dni_Paciente) values (?,?,?,?,?,?)");
+            ps = con.prepareStatement("insert into Tratamiento (Codigo,Descripcion,Fecha,Precio,Cobrado,Dni_Paciente) values (?,?,?,?,?,?)");
             ps.setString(1, miPr.sCodigo);
             ps.setString(2, miPr.sDescripcion);
-            ps.setString(3, miPr.sFecha);
-            ps.setString(4, miPr.fPrecio + "");
-            ps.setString(5, miPr.bCobrado + "");
-            //ps.setString(6, miPr.);
+            ps.setString(3,miPr.sFecha);
+            ps.setString(4,miPr.fPrecio + "");
+            ps.setString(5,miPr.bCobrado + "");
+            ps.setString(6,dni_paciente+ "");
      
             if (ps.executeUpdate()!=0)
         		resultado = "<p>Tratamiento insertado correctamente</p>";
@@ -300,7 +293,6 @@ public class ServerMySQL {
             return resultado + sLastError;
         }
     }
-
     
 
 }
