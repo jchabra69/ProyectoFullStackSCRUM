@@ -9,11 +9,11 @@ services:
       MYSQL_USER: nico
       MYSQL_PASSWORD: CURSO2022
       MYSQL_DATABASE: ClinicaDentistadb
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: CURSO2022
     volumes:
       - db_data:/var/lib/mysql
     ports:
-      - 3306:3307
+      - 3306:3306
 
   # Servicio de Tomcat
   tomcat:
