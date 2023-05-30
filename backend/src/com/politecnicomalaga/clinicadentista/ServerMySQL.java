@@ -22,7 +22,7 @@ public class ServerMySQL {
         Connection con = null;
         // Inicializa toda la información de la conexión a la base de datos
         String dbDriver = "com.mysql.cj.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3306/";
+        String dbURL = "jdbc:mysql://130.61.154.70:3306/";
         // Nombre de la base de datos a la que se accederá
         String dbName = "ClinicaDentistadb";
         String dbUsername = "nico";
@@ -44,6 +44,7 @@ public class ServerMySQL {
         return con;
     }
 
+    //ListaPacientes
     /* Método que realiza una consulta a la base de datos para obtener información de la tabla "Pacientes" y devuelve un HTML que contiene los datos de los pacientes */
     public String getPacientes() {
         String resultado = "";

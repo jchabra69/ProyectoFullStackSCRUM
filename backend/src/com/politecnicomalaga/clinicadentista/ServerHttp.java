@@ -32,6 +32,7 @@ public class ServerHttp extends HttpServlet {
         switch (peticionSolicitada) {
             case "todosPacientes": resultado = bd.getPacientes();
                  break;
+                 //todosPacientes?
             case "insertarPaciente": resultado = bd.insertPaciente(datosPaciente);
                  break;      
             case "eliminarPaciente": resultado = bd.deletePaciente(datosPaciente);

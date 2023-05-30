@@ -1,3 +1,24 @@
+Ahora tenemos un servidor con docker y sus los puertos de cada servicio correspondiente abierto, para acceder 
+
+
+ http://130.61.154.70:8081/ (Apache Tomcat)
+ http://130.61.154.70:8082/ (PHPmyAdmin)
+ http://130.61.154.70:3306/ (mysql, cual no tiene interfaz gráfica, no verás nada en el navegador)
+	
+ Tendrías que hacer esto si quieres conectarte remotamente a la base de datos...
+ mysql -h 130.61.154.70 -P 3306 -u <nombre_usuario> -p
+	
+
+Parar e iniciar, los recursos de nuestro servidor son muy limitados:
+
+sudo docker stop nombreContenedor
+sudo docker ps -a para ver los detenidos tmb
+sudo docker start nombreContenedor
+
+
+TODO LO QUE VES A PARTIR DE ESTE COMENTARIO ES PARA INSTALAR DOCKER EN LOCAL, SERVIDOR ETC.
+
+
 ------------------------------------------------------------------------
 Comandos para meter el script en el servicio de MySQL dentro de Docker
 ------------------------------------------------------------------------
@@ -16,6 +37,8 @@ Date cuenta que en mi caso se llama docker-mysql-1, en la aplicación de Docker
 y su apartado de Containers, verás el nombre de tu docker mysql
 
 docker cp C:\Users\TuNombredeUsuario\Desktop\Docker\ClinicaDentistadb.sql docker-mysql-1:/ClinicaDentistadb.sql
+//Para el servidor, todo iwal
+sudo docker cp ClinicaDentistadb.sql dockerconfig_mysql_1:/ClinicaDentistadb.sql
 
 Una vez hayas hecho todo lo anterior, inicia sesión en mi usuario, su contraseña es
 CURSO2022
