@@ -5,82 +5,9 @@
     <title>Clínica Dentista</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #f1f1f1;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: #333;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        form {
-            margin-bottom: 30px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #666;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: #fff;
-        }
-
-        @media only screen and (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-        }
+        /* Estilos CSS */
     </style>
 </head>
-<!-- Conjunto de formularios HTML que proporcionan al usuario entradas de texto para al presionar los botones, se envie el formulario al servidor para realizar una búsqueda basada en el dato introducido. -->
 <body>
 <h1>Clínica Dem-Encía</h1>
 
@@ -127,6 +54,8 @@
     <button type="submit">Cobrar</button>
 </form>
 
+<div id="resultado"></div>
+
 <script>
     //URL de la que obtenemos los datos
     const baseUrl = 'http://localhost:8081/index.html';
@@ -147,6 +76,7 @@
         event.preventDefault();
         const dniPaciente = document.getElementById('dniInput').value;
         const url = `${baseUrl}/listaTratamientos?parametro=${encodeURIComponent(dniPaciente)}`;
+        //abrimos nuestra url en una nueva pestaña
         window.open(url, '_blank');
     });
 
@@ -155,6 +85,7 @@
         event.preventDefault();
         const jsonPaciente = document.getElementById('jsonPacienteInput').value;
         const url = `${baseUrl}/insertPaciente?parametro=${encodeURIComponent(jsonPaciente)}`;
+        //abrimos nuestra url en una nueva pestaña
         window.open(url, '_blank');
     });
 
@@ -163,6 +94,7 @@
         event.preventDefault();
         const jsonTratamiento = document.getElementById('jsonTratamientoInput').value;
         const url = `${baseUrl}/insertTratamiento?parametro=${encodeURIComponent(jsonTratamiento)}`;
+        //abrimos nuestra url en una nueva pestaña
         window.open(url, '_blank');
     });
 
@@ -172,9 +104,27 @@
         const codTratamiento = document.getElementById('codTratamientoInput').value;
         const codPaciente = document.getElementById('codPacienteInput').value;
         const url = `${baseUrl}/cobraTratamiento?parametro=${encodeURIComponent(codTratamiento)};${encodeURIComponent(codPaciente)}`;
+        //abrimos nuestra url en una nueva pestaña
         window.open(url, '_blank');
+    });
+
+    // Obtener el formulario de resultado
+    var formResultado = document.getElementById("resultadoForm");
+    formResultado.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Realizar la solicitud POST al servlet para obtener el resultado
+        fetch("MyServlet", {
+            method: "POST",
+            body: new FormData(formResultado)
+        })
+            .then(response => response.text()) // Obtener el resultado como texto
+            .then(result => {
+                // Mostrar el resultado en el elemento <div>
+                document.getElementById("resultado").textContent = result;
+            })
+            .catch(error => console.log(error));
     });
 </script>
 </body>
-
 </html>

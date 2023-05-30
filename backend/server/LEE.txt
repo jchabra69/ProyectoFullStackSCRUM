@@ -1,7 +1,7 @@
 Ahora tenemos un servidor con docker y sus los puertos de cada servicio correspondiente abierto, para acceder 
 
 
- http://130.61.154.70:8081/ (Apache Tomcat)
+ http://130.61.154.70:8080/ (Apache Tomcat)
  http://130.61.154.70:8082/ (PHPmyAdmin)
  http://130.61.154.70:3306/ (mysql, cual no tiene interfaz gráfica, no verás nada en el navegador)
 	
@@ -14,6 +14,12 @@ Parar e iniciar, los recursos de nuestro servidor son muy limitados:
 sudo docker stop nombreContenedor
 sudo docker ps -a para ver los detenidos tmb
 sudo docker start nombreContenedor
+
+sudo docker rm -f  contenedor1, contenedoe2
+
+Para mover el .war
+sudo docker cp /home/nikola/DockerConfig/Clinica.war dockerconfig_tomcat_1:/usr/local/tomcat/webapps
+
 
 
 TODO LO QUE VES A PARTIR DE ESTE COMENTARIO ES PARA INSTALAR DOCKER EN LOCAL, SERVIDOR ETC.

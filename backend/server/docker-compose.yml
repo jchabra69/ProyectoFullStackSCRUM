@@ -6,50 +6,41 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_USER: nico                    # Usuario
-      MYSQL_PASSWORD: CURSO2022           # Contraseñita
-      MYSQL_DATABASE: ClinicaDentistadb   # Base de datos
-      MYSQL_ROOT_PASSWORD: rootpassword   # Contraseña de root
+      MYSQL_USER: nico
+      MYSQL_PASSWORD: CURSO2022
+      MYSQL_DATABASE: ClinicaDentistadb
+      MYSQL_ROOT_PASSWORD: rootpassword
     volumes:
-      - db_data:/var/lib/mysql            # Volumen para almacenar los datos
+      - db_data:/var/lib/mysql
     ports:
-      - 3306:3306                         # Mapeo de puerto
+      - 3306:3307
 
   # Servicio de Tomcat
   tomcat:
     image: tomcat:9.0.75-jdk8-corretto-al2
     restart: always
     ports:
-      - 8081:8080                         # Mapeo del puerto de Tomcat
+      - 8080:8080
     volumes:
-      - ./web:/usr/local/tomcat/webapps   # Volumen para desplegar las APLIWEBS en el server
+      - ./web:/usr/local/tomcat/webapps:Z
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      - mysql                             # Primero debe estar MySQL funcionado para que Tomcat se ejecute
+      - mysql
     links:
-      - mysql:mysql                       # Link al servicio de MySQL
+      - mysql:mysql
 
   # Servicio de phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - 8082:80                           # Mapeo de puerto
+      - 8082:80
     environment:
-      PMA_HOST: mysql                      # Host de MySQL
-      PMA_PORT: 3306                       # Puerto de MySQL
-      PMA_USER: nico                       # Nombre de usuario de MySQL
-      PMA_PASSWORD: CURSO2022              # Contraseña de MySQL
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: nico
+      PMA_PASSWORD: CURSO2022
 
 volumes:
   db_data:
-    driver: local                          # Volumen local para almacenar los datos de MySQL
-
-
-
-
-
-
-
-
-
+    driver: local

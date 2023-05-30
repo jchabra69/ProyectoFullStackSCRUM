@@ -95,7 +95,7 @@ public class ServerHttp extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "BackEnd TrabajoTaller Servlet";
+        return "BackEnd ClinicaDentista Servlet";
     }// </editor-fold>
 
 }
