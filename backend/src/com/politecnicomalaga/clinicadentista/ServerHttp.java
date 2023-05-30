@@ -12,51 +12,59 @@ import javax.servlet.http.HttpServletResponse;
 public class ServerHttp extends HttpServlet {
 
 
-/* Método que procesa una solicitud HTTP, obtiene sus parámetros y realiza operaciones en una base de datos MySQL según el valor de la petición que genera una respuesta HTML que incluye el resultado de las operaciones.*/
-    
+    /* Método que procesa una solicitud HTTP, obtiene sus parámetros y realiza operaciones en una base de datos MySQL según el valor de la petición que genera una respuesta HTML que incluye el resultado de las operaciones.*/
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-	// Obtener los parámetros de la petición
+
+        // Obtener los parámetros de la petición
         String peticionSolicitada = request.getParameter("peticion");
         String datosPaciente = request.getParameter("datosPaciente");  //Datos enviados en CSV
         //String datosTratamiento = request.getParameter("datosTratamiento");
-       
+
         // Configurar el tipo de contenido de la respuesta
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String resultado = "";
         ServerMySQL bd = new ServerMySQL();
-	    
+
         // Realizar operaciones según la petición solicitada
         switch (peticionSolicitada) {
-            case "todosPacientes": resultado = bd.getPacientes();
-                 break;
-            case "insertarPaciente": resultado = bd.insertPaciente(datosPaciente);
-                 break;      
-            case "eliminarPaciente": resultado = bd.deletePaciente(datosPaciente);
-                 break;
-            /*case "insertarTratamiento": resultado = bd.insertTratamiento(datosTratamiento);
-                 break; 
-            case "eliminarTratamiento": resultado = bd.deleteTratamiento();
-                 break;*/
-            default: resultado = "<p>Parámetro desconocido</p>";
+
+            case "listaTratamientos":
+                resultado = bd.listaTratamientos(request.getParameter("dni"));
+                break;
+
+            case "todosPacientes":
+                resultado = bd.getPacientes();
+                break;
+            case "insertarPaciente":
+                resultado = bd.insertPaciente(datosPaciente);
+                break;
+            //case "eliminarPaciente": resultado = bd.deletePaciente(datosPaciente);
+            //   break;
+            case "insertarTratamiento":
+                resultado = bd.insertTratamiento(resultado, datosPaciente);
+                break;
+            //case "eliminarTratamiento": resultado = bd.deleteTratamiento();
+            //break;
+            default:
+                resultado = "<p>Parámetro desconocido</p>";
         }
-        
+
         try (PrintWriter out = response.getWriter()) {
             // Generar la respuesta HTML
             //out.print(resultado);
-            out.println("<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<head>\n" +
-                            "<title>Get Pacientes Result</title>\n" +
-                            "<meta charset=\"UTF-8\">\n" +
-                            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                        "</head>\n" +
-                        "<body style=\"background-color:light-green;\"><p>Resultado:</p>\n" +
-                            resultado +
-                        "</body>\n" +
-                        "</html>");
+            out.println("<!DOCTYPE html>\n"
+                    + "<html>\n"
+                    + "<head>\n"
+                    + "<title>Get Pacientes Result</title>\n"
+                    + "<meta charset=\"UTF-8\">\n"
+                    + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                    + "</head>\n"
+                    + "<body style=\"background-color:light-green;\"><p>Resultado:</p>\n"
+                    + resultado
+                    + "</body>\n"
+                    + "</html>");
         }
     }
 
@@ -100,4 +108,3 @@ public class ServerHttp extends HttpServlet {
     }// </editor-fold>
 
 }
-	

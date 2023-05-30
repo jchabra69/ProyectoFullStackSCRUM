@@ -22,7 +22,7 @@ public class ServerMySQL {
         Connection con = null;
         // Inicializa toda la información de la conexión a la base de datos
         String dbDriver = "com.mysql.cj.jdbc.Driver";
-        String dbURL = "jdbc:mysql://localhost:3307/";
+        String dbURL = "jdbc:mysql://localhost:3306/";
         // Nombre de la base de datos a la que se accederá
         String dbName = "ClinicaDentistadb";
         String dbUsername = "nico";
@@ -263,6 +263,47 @@ public class ServerMySQL {
             return resultado + sLastError;
         }
     }
+    
+    public void cobraTratamiento(String codTratamiento, String codPaciente) {
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    try {
+        // Inicia la base
+        con = this.initDatabase();
+
+        String query = "UPDATE Tratamiento SET Cobrado = true WHERE Codigo = ? AND Dni_Paciente = ?";
+        ps = con.prepareStatement(query);
+        ps.setString(1, codTratamiento);
+        ps.setString(2, codPaciente);
+
+        // Actualizo las filas
+        int rowsAfectadas = ps.executeUpdate();
+
+        if (rowsAfectadas > 0) {
+            System.out.println("Tratamiento cobrado exitosamente.");
+        } else {
+            System.out.println("No se encontró el tratamiento o el paciente no coincide.");
+        }
+    } catch (Exception e) {
+        sLastError = sLastError + "<p>Error accediendo a la BBDD Update: " + e.getMessage() + "</p>";
+        e.printStackTrace();
+    } finally {
+        // Cerrar conexión
+        try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (Exception e) {
+            sLastError = sLastError + "<p>Error cerrando la BBDD: " + e.getMessage() + "</p>";
+            e.printStackTrace();
+        }
+    }
+}
+
 
     
 
