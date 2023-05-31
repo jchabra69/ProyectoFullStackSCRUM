@@ -1,5 +1,5 @@
 # ProyectoFullStackSCRUM
-
+http://130.61.154.70:8080/Clinica/
 ## 11/05/2023
 Primera reunión SCRUM. Todos los integrantes estaban conectados. La razón de la reunión era ver un poco por encima el proyecto. Al principio a la mayoría, incluyéndome a mí, nos costaba entender los primeros conceptos del trabajo, por lo que la distribución del trabajo no quedó muy claro. Gonzalo se encargó de empezar el BackEnd y Nico y Fran crearon la base de datos.
 
