@@ -7,12 +7,12 @@ public class Paciente {
 	public enum AtributosPaciente {NOMBRE,APELLIDOS,DNI,FNAC,TFNO, EMAIL};
 	
 	//ESTADOS - Atributos
-	public String sNombre;
-	public String sApellidos;
-	public String sTelefono;
-	public String sEmail;
-	public String sDni;
-	public String sFNac;
+	private String sNombre;
+	private String sApellidos;
+	private String sTelefono;
+	private String sEmail;
+	private String sDni;
+	private String sFNac;
 	
 	public ArrayList<Tratamiento> misTratamientos;
 	
